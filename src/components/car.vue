@@ -4,7 +4,7 @@
         <div>
             <el-input v-model="input" style="width: 250px; margin-top:5px ;margin-bottom: 5px;margin-right:5px;"></el-input>
             <el-select v-model="value" placeholder="请选择" style="width: 100px;">
-                <el-option v-for="item in genders" :key="item.value" :label="item.label" :value="item.value">
+                <el-option v-for="item in carStatus" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
             </el-select>
 
@@ -14,29 +14,23 @@
             </el-button>
             <el-dialog title="提示" :visible.sync="dialogVisiblepush" width="30%">
                 <el-form ref="editForm" :model="editForm" label-width="80px">
-                    <el-form-item label="姓名">
-                        <el-input v-model="editForm.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="年龄">
-                        <el-input v-model="editForm.age"></el-input>
-                    </el-form-item>
-                    <el-form-item label="级别">
-                        <el-select v-model="editForm.grade">
-                            <el-option v-for="item in grades" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="性别">
-                        <el-select v-model="editForm.gender">
-                            <el-option v-for="item in genders" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
                     <el-form-item label="车牌号">
                         <el-input v-model="editForm.carNumber"></el-input>
                     </el-form-item>
-                    <el-form-item label="手机号">
-                        <el-input v-model="editForm.phone"></el-input>
+                    <el-form-item label="出厂时间">
+                        <el-input v-model="editForm.year"></el-input>
+                    </el-form-item>
+                    <el-form-item label="汽车状态">
+                        <el-select v-model="editForm.status">
+                            <el-option v-for="item in carStatus" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="制造商">
+                        <el-input v-model="editForm.make"></el-input>
+                    </el-form-item>
+                    <el-form-item label="燃料类型">
+                        <el-input v-model="editForm.fuelType"></el-input>
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -47,28 +41,21 @@
         </div>
 
         <el-table :data="tableData" style="width: 100% ;overflow: auto;" border>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="carNumber" label="车牌号" width="180">
             </el-table-column>
-            <el-table-column prop="age" label="年龄" width="120">
+            <el-table-column prop="make" label="汽车制造商" width="180">
             </el-table-column>
-            <el-table-column prop="grade" label="级别" width="180">
+            <el-table-column prop="status" label="汽车状态" width="180">
                 <template slot-scope="scope">
-                    <el-tag :type="scope.row.grade === 1 ? 'danger' : (scope.row.grade === 2 ? 'primary' : 'success')"
+                    <el-tag :type="scope.row.status == 1 ? 'danger' : (scope.row.status == 2 ? 'primary' : 'success')"
                         disable-transitions effect="dark">
-                        {{ scope.row.grade === 1 ? '金牌车手' : (scope.row.grade === 2 ? '银牌车手' : '铜牌车手') }}
+                        {{ scope.row.status == 1 ? '维修中' : (scope.row.status == 2 ? '空闲中' : '使用中') }}
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="gender" label="性别" width="120">
-                <template slot-scope="scope">
-                    <el-tag :type="scope.row.gender === 1 ? 'primary' : 'success'" disable-transitions>
-                        {{ scope.row.gender === 1 ? '男' : '女' }}
-                    </el-tag>
-                </template>
+            <el-table-column prop="year" label="出厂时间" width="120">
             </el-table-column>
-            <el-table-column prop="carNumber" label="车牌号" width="220">
-            </el-table-column>
-            <el-table-column prop="phone" label="手机号" width="220">
+            <el-table-column prop="fuelType" label="燃料类型" width="200">
             </el-table-column>
             <el-table-column label="操作" width="240">
                 <template slot-scope="scope">
@@ -78,31 +65,24 @@
                     </el-button>
                     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
                         <el-form ref="scope.row" :model="addForm" label-width="80px">
-                            <el-form-item label="姓名">
-                                <el-input v-model="addForm.name"></el-input>
-                            </el-form-item>
-                            <el-form-item label="年龄">
-                                <el-input v-model="addForm.age"></el-input>
-                            </el-form-item>
-                            <el-form-item label="级别">
-                                <el-select v-model="addForm.grade">
-                                    <el-option v-for="item in grades" :key="item.value" :label="item.label"
-                                        :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="性别">
-                                <el-select v-model="addForm.gender">
-                                    <el-option v-for="item in genders" :key="item.value" :label="item.label"
-                                        :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
                             <el-form-item label="车牌号">
                                 <el-input v-model="addForm.carNumber"></el-input>
                             </el-form-item>
-                            <el-form-item label="手机号">
-                                <el-input v-model="addForm.phone"></el-input>
+                            <el-form-item label="出厂时间">
+                                <el-input v-model="addForm.year"></el-input>
+                            </el-form-item>
+                            <el-form-item label="汽车状态">
+                                <el-select v-model="addForm.status">
+                                    <el-option v-for="item in carStatus" :key="item.value" :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="制造商">
+                                <el-input v-model="addForm.make"></el-input>
+                            </el-form-item>
+                            <el-form-item label="燃料类型">
+                                <el-input v-model="addForm.fuelType"></el-input>
                             </el-form-item>
                         </el-form>
                         <span slot="footer" class="dialog-footer">
@@ -110,7 +90,7 @@
                             <el-button type="primary" @click.prevent.native="updated">确 定</el-button>
                         </span>
                     </el-dialog>
-                    <el-button @click.native.prevent="deleteRow(scope.row.id)" type="danger" size="small">
+                    <el-button @click.native.prevent="deleteRow(scope.row.carNumber)" type="danger" size="small">
                         移除
                     </el-button>
                 </template>
@@ -136,7 +116,7 @@ export default {
             axios({
                 baseURL: 'http://localhost:7070',
                 method: 'post',
-                url: '/employee/update',
+                url: '/car/update',
                 data: this.addForm
             }).then(res => {
                 if (res.code == 1)
@@ -149,11 +129,13 @@ export default {
             this.dialogVisiblepush = !this.dialogVisiblepush;
             axios({
                 method: 'post',
-                url: 'http://localhost:7070/employee/add',
+                url: 'http://localhost:7070/car/add',
                 data: this.editForm
             }).then(res => {
-                if (res.code == 1)
+                if (res.code == 1) {
                     this.$message.success("添加成功!!")
+                    this.loadGet();
+                }
                 else
                     this.$message.error("添加失败")
             })
@@ -169,12 +151,12 @@ export default {
         loadGet() {
             axios({
                 method: 'post',
-                url: 'http://localhost:7070/employee/list',
+                url: 'http://localhost:7070/car/list',
                 data: {
                     page: parseInt(this.currentPage),
                     pageSize: parseInt(this.pageSize),
-                    name: this.input,
-                    gender: parseInt(this.value)
+                    carNumber: this.input,
+                    status: parseInt(this.value)
                 },
             }).then(res => (
                 console.log(res),
@@ -194,9 +176,9 @@ export default {
         deleteRow(val) {
             axios({
                 method: 'delete',
-                url: 'http://localhost:7070/employee/delete',
+                url: 'http://localhost:7070/car/delete',
                 data: {
-                    id: val
+                    carNumber: val
                 }
             }).then(res => {
                 console.log(res.code);
@@ -221,45 +203,35 @@ export default {
             currentPage: 1,
             pageSize: 5,
             editForm: {
-                name: '',
-                age: '',
-                gender: '',
-                age: '',
-                grade: ''
+                carNumber: "",
+                status: 1,
+                make: "",
+                year: "",
+                fuelType: ""
             },
             grade: null,
             tableData: [{
-                id: null,
-                name: null,
-                age: null,
-                grade: null,
-                gender: null,
-                carNumber: null,
-                phone: null,
-                total: 100
+                carNumber: "1",
+                status: 1,
+                make: "3",
+                year: "4",
+                fuelType: "5"
             }],
             addForm: {
 
             },
-            genders: [
+            carStatus: [
                 {
                     value: '1',
-                    label: "男"
-                }, {
-                    value: '2',
-                    label: "女"
-                }
-            ],
-            grades: [
+                    label: '维修中'
+                },
                 {
-                    value: '1',
-                    label: "金牌车手"
-                }, {
                     value: '2',
-                    label: "银牌车手"
-                }, {
+                    label: '空闲中'
+                },
+                {
                     value: '3',
-                    label: "铜牌车手"
+                    label: '使用中'
                 }
             ],
             value: null

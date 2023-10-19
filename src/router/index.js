@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../components/loginCheck.vue'
 import Home from '../components/home.vue'
 import User from '../components/user.vue'
+import car from '../components/car.vue';
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
         path: '/user',
         name: "用户界面",
         component: User
+      },
+      {
+        path: '/car',
+        name: '车辆界面',
+        component: car
       }
     ]
   },
