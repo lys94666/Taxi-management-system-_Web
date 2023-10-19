@@ -1,0 +1,15 @@
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/* 解决背景填充不是全屏问题 */
+
+@font-face{
+    font-family: 'bylt';
+    src:url(../bylt.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
